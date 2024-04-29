@@ -32,6 +32,6 @@ public class TestLocalP2pApplication {
 
     public static void main(String[] args) {
         SpringApplication.from(LocalP2pApplication::main).with(TestLocalP2pApplication.class).run(args);
-    }≠
+    }
 
 }

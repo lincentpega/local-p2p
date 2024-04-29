@@ -6,7 +6,7 @@ services:
       - 'MONGO_INITDB_ROOT_PASSWORD=secret'
       - 'MONGO_INITDB_ROOT_USERNAME=root'
     ports:
-      - '27017'
+      - '27017:27017'
   postgres:
     image: 'postgres:latest'
     environment:
@@ -14,8 +14,13 @@ services:
       - 'POSTGRES_PASSWORD=secret'
       - 'POSTGRES_USER=myuser'
     ports:
-      - '5432'
+      - '5432:5432'
+    volumes:
+      - pg_data:/var/lib/postgresql
   redis:
     image: 'redis:latest'
     ports:
-      - '6379'
+      - '6379:6379'
+
+volumes:
+  pg_data:
