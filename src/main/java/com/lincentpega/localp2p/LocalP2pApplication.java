@@ -2,7 +2,6 @@ package com.lincentpega.localp2p;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 
 @SpringBootApplication()
 public class LocalP2pApplication {

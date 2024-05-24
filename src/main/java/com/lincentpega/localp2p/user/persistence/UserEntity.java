@@ -1,22 +1,20 @@
-package com.lincentpega.localp2p.asset.persistence;
+package com.lincentpega.localp2p.user.persistence;
 
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
 @Entity
+@Table(name = "users")
 @Getter
 @Setter
-@Table(name = "assets")
-public class AssetEntity {
+public class UserEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(nullable = false)
     private Long id;
 
     @Column(nullable = false)
     private String name;
-
-    @Column(nullable = false)
-    private Boolean isFiat;
 }
