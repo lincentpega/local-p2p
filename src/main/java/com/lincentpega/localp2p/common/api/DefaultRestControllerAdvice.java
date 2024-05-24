@@ -1,10 +1,12 @@
-package com.lincentpega.localp2p.api;
+package com.lincentpega.localp2p.common.api;
 
+import com.lincentpega.localp2p.common.exceptions.LogicException;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import java.util.List;
 
@@ -24,6 +26,16 @@ public class DefaultRestControllerAdvice {
                 .map(error -> new ErrorResponse(error.getDefaultMessage()))
                 .toList();
         return ResponseEntity.badRequest().body(errors);
+    }
+
+    @ExceptionHandler(LogicException.class)
+    public ResponseEntity<?> handleLogicException(LogicException ex) {
+        return ResponseEntity.badRequest().body(new ErrorResponse(ex.getMessage()));
+    }
+
+    @ExceptionHandler(NoResourceFoundException.class)
+    public ResponseEntity<?> handleNoResourceFoundException() {
+        return ResponseEntity.notFound().build();
     }
 
     @ExceptionHandler(Exception.class)

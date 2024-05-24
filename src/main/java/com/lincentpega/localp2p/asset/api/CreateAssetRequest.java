@@ -9,4 +9,6 @@ public class CreateAssetRequest {
     @NotNull
     @Size(min = 3, max = 4)
     private String name;
+
+    private boolean isFiat;
 }

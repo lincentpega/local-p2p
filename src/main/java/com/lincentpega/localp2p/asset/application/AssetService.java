@@ -1,9 +1,9 @@
 package com.lincentpega.localp2p.asset.application;
 
-import com.lincentpega.localp2p.asset.AssetMappers;
 import com.lincentpega.localp2p.asset.domain.Asset;
+import com.lincentpega.localp2p.asset.mappers.AssetMapper;
 import com.lincentpega.localp2p.asset.persistence.AssetRepository;
-import com.lincentpega.localp2p.exceptions.AlreadyExistsException;
+import com.lincentpega.localp2p.common.exceptions.LogicException;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -13,25 +13,27 @@ import java.util.stream.StreamSupport;
 public class AssetService {
 
     private final AssetRepository assetRepository;
+    private final AssetMapper assetMapper;
 
-    public AssetService(AssetRepository assetRepository) {
+    public AssetService(AssetRepository assetRepository, AssetMapper assetMapper) {
         this.assetRepository = assetRepository;
+        this.assetMapper = assetMapper;
     }
 
     public Iterable<Asset> getAssets() {
         return StreamSupport.stream(assetRepository.findAll().spliterator(), false)
-                .map(AssetMappers::toDomain)
+                .map(assetMapper::toAsset)
                 .toList();
     }
 
     public Optional<Asset> getAssetById(long id) {
-        return assetRepository.findById(id).map(AssetMappers::toDomain);
+        return assetRepository.findById(id).map(assetMapper::toAsset);
     }
 
     public Asset saveAsset(Asset asset) {
         if (assetRepository.existsByName(asset.getName())) {
-            throw new AlreadyExistsException("Asset with id " + asset.getId() + " already exists");
+            throw new LogicException("Asset with id " + asset.getId() + " already exists");
         }
-        return AssetMappers.toDomain(assetRepository.save(AssetMappers.toModel(asset)));
+        return assetMapper.toAsset(assetRepository.save(assetMapper.toAssetEntity(asset)));
     }
 }

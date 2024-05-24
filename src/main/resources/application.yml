@@ -1,0 +1,28 @@
+jwt:
+  auth:
+    converter:
+      principal-attribute: username
+      role-claim: roles
+spring:
+  application:
+    name: local-p2p
+  datasource:
+    password: secret
+    url: jdbc:postgresql://localhost:5432/mydatabase
+    username: myuser
+  docker:
+    compose:
+      enabled: false
+  jpa:
+    properties:
+      hibernate:
+        format_sql: true
+  liquibase:
+    change-log: db/changelog/db.changelog-master.xml
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+#          issuer-uri: https://identity.local-p2p.com/realms/local-p2p
+          issuer-uri: http://localhost:8091/realms/local-p2p
+          jwk-set-uri: ${spring.security.oauth2.resourceserver.jwt.issuer-uri}/protocol/openid-connect/certs

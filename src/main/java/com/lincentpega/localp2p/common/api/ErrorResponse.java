@@ -1,4 +1,4 @@
-package com.lincentpega.localp2p.api;
+package com.lincentpega.localp2p.common.api;
 
 import lombok.Data;
 

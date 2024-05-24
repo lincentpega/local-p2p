@@ -1,9 +1,7 @@
 package com.lincentpega.localp2p.asset.api;
 
-import com.lincentpega.localp2p.asset.domain.Asset;
 import com.lincentpega.localp2p.asset.application.AssetService;
-import com.lincentpega.localp2p.api.ErrorResponse;
-import com.lincentpega.localp2p.exceptions.AlreadyExistsException;
+import com.lincentpega.localp2p.asset.domain.Asset;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -38,14 +36,9 @@ public class AssetController {
 
     @PostMapping
     public ResponseEntity<?> createAsset(@Valid @RequestBody CreateAssetRequest asset) {
-        Asset savedAsset = assetService.saveAsset(new Asset(asset.getName()));
+        Asset savedAsset = assetService.saveAsset(new Asset(asset.getName(), asset.isFiat()));
         URI location = getUri(savedAsset);
         return ResponseEntity.created(location).build();
-    }
-
-    @ExceptionHandler(AlreadyExistsException.class)
-    public ResponseEntity<?> handleAlreadyExistsException() {
-        return ResponseEntity.badRequest().body(new ErrorResponse("Asset already exists"));
     }
 
     private static URI getUri(Asset savedAsset) {

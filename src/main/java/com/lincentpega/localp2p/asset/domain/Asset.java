@@ -1,16 +1,16 @@
 package com.lincentpega.localp2p.asset.domain;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
-@AllArgsConstructor
 public class Asset {
 
     private Long id;
     private String name;
+    private Boolean isFiat;
 
-    public Asset(String name) {
+    public Asset(String name, boolean isFiat) {
         this.name = name;
+        this.isFiat = isFiat;
     }
 }

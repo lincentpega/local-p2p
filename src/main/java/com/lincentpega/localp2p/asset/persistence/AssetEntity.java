@@ -8,22 +8,16 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-@NoArgsConstructor
-@Table(name = "asset")
-public class AssetModel {
+@Table(name = "assets")
+public class AssetEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private String name;
 
-    public AssetModel(String name) {
-        this.name = name;
-    }
-
-    public AssetModel(Long id, String name) {
-        this.id = id;
-        this.name = name;
-    }
+    @Column(nullable = false)
+    private Boolean isFiat;
 }
